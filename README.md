@@ -13,7 +13,7 @@ Run the following command to create the certificates:
 openssl req -x509 -batch -nodes -newkey rsa:2048 -keyout selfsigned.key -out selfsigned.crt -config cert.conf -days 9999
 ```
 
-Place the generated `selfsigned.key` and `selfsigned.crt` files in the designated ansible/ssl.
+Place the generated `selfsigned.key` and `selfsigned.crt` files in the roles/ssl_configs/files directory.
 
 ---
 
@@ -28,7 +28,8 @@ node3 ansible_host=192.168.1.103
 ```
 
 ---
-
+### 3. update vault configs with your desired ips in roles/vault_config_node*/files/vault_node*.hcl
+---
 ## Running the Playbook
 
 Use the following command to execute the Ansible playbook and deploy Vault:
