@@ -13,7 +13,7 @@ Run the following command to create the certificates:
 openssl req -x509 -batch -nodes -newkey rsa:2048 -keyout selfsigned.key -out selfsigned.crt -config cert.conf -days 9999
 ```
 
-Place the generated `selfsigned.key` and `selfsigned.crt` files in the designated directory (e.g., `/etc/vault/ssl/`).
+Place the generated `selfsigned.key` and `selfsigned.crt` files in the designated ansible/ssl.
 
 ---
 
