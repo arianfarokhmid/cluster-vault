@@ -18,3 +18,8 @@
 - hosts: node3
   roles:
      - vault_config_node3
+
+
+- hosts: all
+  roles:
+     - start_vault
