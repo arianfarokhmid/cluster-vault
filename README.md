@@ -122,3 +122,32 @@ This command lists all the nodes in the Raft cluster and their status.
 Your Vault cluster is now operational in High Availability mode. The setup ensures seamless request forwarding and leadership failover. Test the configuration by writing and reading secrets, as well as simulating a system failure to observe the cluster's resilience.
 
 For further information, consult the [Vault Documentation](https://www.vaultproject.io/docs/).
+---
+# integration vault with spring 
+
+edit application.properties with following configs:
+   ```bash
+   spring.application.name=<secret sub path> // <--- this is the name of secret sub path in vault
+   spring.cloud.vault.uri=https://192.168.7.35:8200 // <--- the ha ip 
+   spring.cloud.vault.token=<yout vault token>
+   spring.cloud.vault.kv.enabled=true
+   spring.cloud.vault.kv.backend=<vault engine> // <--- secret path in vault
+   spring.config.import=vault://
+   ```
+
+add vault dependencies in pom file:
+   
+   ```bash
+   <!-- Starters -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-vault-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+   ```
+
+use this command for authenticate self signed ssl
+
+   ```bash
+    sudo keytool -import -trustcacerts -file selfsigned.crt -alias vault -keystore /etc/ssl/certs/java/cacerts -storepass changeit
+   ```
