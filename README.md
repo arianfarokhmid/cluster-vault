@@ -5,6 +5,8 @@ This repository contains Ansible playbooks and roles for deploying and configuri
 ## Prerequisites
 
 ### 1. Generate SSL Certificates
+first of  update ips field in cert.conf with  your desired ips 
+
 Vault requires secure communication between nodes. Generate a self-signed SSL certificate using `openssl`. A configuration file (`cert.conf`) is provided in the root of the project.
 
 Run the following command to create the certificates:
