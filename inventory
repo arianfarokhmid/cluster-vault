@@ -1,0 +1,13 @@
+[all]
+node1 ansible_host=192.168.7.36
+node2 ansible_host=192.168.7.37
+node3 ansible_host=192.168.7.38
+
+[node1]
+node1
+
+[node2]
+node2
+
+[node3]
+node3

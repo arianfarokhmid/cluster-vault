@@ -1,0 +1,36 @@
+---
+
+- name: Update APT cache and install required packages
+  apt:
+    update_cache: yes
+    name: 
+      - gpg
+      - wget
+    state: present
+
+- name: Download and add HashiCorp GPG key
+  get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    mode: '0644'
+
+- name: Verify HashiCorp GPG key fingerprint
+  command: gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+  register: gpg_fingerprint
+  changed_when: false # This task is for verification only
+
+- debug:
+    msg: "{{ gpg_fingerprint.stdout_lines }}"
+
+- name: Add HashiCorp repository
+  shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" > /etc/apt/sources.list.d/hashicorp.list
+  args:
+    creates: /etc/apt/sources.list.d/hashicorp.list
+
+- name: Update APT cache and install Vault
+  apt:
+    update_cache: yes
+    name: vault
+    state: present
+

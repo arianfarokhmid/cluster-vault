@@ -1,0 +1,35 @@
+---
+
+- name: Check if firewalld is installed
+  command: dpkg -l firewalld
+  register: firewalld_check
+  failed_when: firewalld_check.rc not in [0, 1]  # Ignore 'not-installed' error (rc 1)
+  changed_when: no
+
+- name: Debug - firewalld status
+  debug:
+    msg: "Firewalld is installed: {{ firewalld_check.rc == 0 }}"
+
+- name: Ensure firewalld is running and enabled
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  when: firewalld_check.rc == 0  # Run only if firewalld is installed
+
+- name: Open required ports if firewalld is installed
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: no
+  loop: 
+    - 8200/tcp
+    - 8201/tcp
+  when: firewalld_check.rc == 0  # Run only if firewalld is installed
+
+- name: Reload firewalld to apply changes
+  firewalld:
+    state: reloaded
+  when: firewalld_check.rc == 0  # Run only if firewalld is installed
+

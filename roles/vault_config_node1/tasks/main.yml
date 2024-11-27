@@ -1,0 +1,17 @@
+---
+- name: Configure Vault for node1
+  copy:
+    src: files/vault_node1.hcl
+    dest: /etc/vault.d/vault.hcl
+    owner: vault
+    group: vault
+
+- name: export variables to shell
+  shell: |
+    export VAULT_ADDR=https://192.168.7.36:8200
+
+- name: Add variable to user .bashrc
+  lineinfile:
+    path: ~/.bashrc
+    line: 'export VAULT_ADDR="https://192.168.7.36:8200"'
+    create: yes   

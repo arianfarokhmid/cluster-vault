@@ -1,0 +1,20 @@
+---
+- hosts: all
+  roles:
+     - download_vault
+     - data_directory			
+     - open_ports 
+     - ssl_configs
+     
+
+- hosts: node1
+  roles: 
+     - vault_config_node1
+
+- hosts: node2
+  roles:
+     - vault_config_node2
+
+- hosts: node3
+  roles:
+     - vault_config_node3

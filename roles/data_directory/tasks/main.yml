@@ -1,0 +1,10 @@
+---
+
+- name: Create the /opt/raft directory for data
+  file:
+    path: /opt/raft
+    state: directory
+    owner: vault
+    group: vault
+    mode: '0755'
+    recurse: yes

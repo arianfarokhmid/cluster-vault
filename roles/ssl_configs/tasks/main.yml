@@ -1,0 +1,21 @@
+---
+- name: Ensure the tls directory exists
+  file:
+    path: /etc/vault.d/tls
+    state: directory
+    owner: vault
+    group: vault
+
+- name: copy ssl cert to nodes
+  copy:
+    src: files/selfsigned.crt
+    dest: /etc/vault.d/tls/selfsigned.crt
+    owner: vault
+    group: vault
+
+- name: copy ssl key to nodes
+  copy:
+    src: files/selfsigned.key
+    dest: /etc/vault.d/tls/selfsigned.key
+    owner: vault
+    group: vault
