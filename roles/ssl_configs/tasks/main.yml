@@ -19,3 +19,8 @@
     dest: /etc/vault.d/tls/selfsigned.key
     owner: vault
     group: vault
+
+- name: copy cert to /etc/ssl/certs/  # for ubuntu
+  copy:
+    src: files/selfsigned.crt
+    dest: /etc/ssl/certs/
